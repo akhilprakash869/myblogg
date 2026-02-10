@@ -1,0 +1,56 @@
+---
+title: "Your Post Title Here"
+date: "YYYY-MM-DD"
+excerpt: "A short description of your post that appears on the card (1-2 sentences)."
+category: "Technology" # Options: Online Security, Politics, Business, Research Lab, Digital Culture, Books & Newsletters, Podcast & Video
+tags: ["Tag1", "Tag2"]
+readTime: "5 min read"
+author: "Your Name"
+featuredImage: "https://images.unsplash.com/your-image-url" # Optional: URL for the hero image
+---
+
+# Introduction
+
+Write your introduction here. Markdown syntax is supported.
+
+- Bullet point 1
+- Bullet point 2
+
+## Adding Images
+
+You can add images using standard Markdown syntax. They will automatically get rounded corners and captions.
+
+![Caption for the image](https://images.unsplash.com/photo-example?w=1200)
+
+## Adding Video
+
+To add a video, use the `<Video />` component.
+
+### YouTube Example
+<Video 
+    src="https://www.youtube.com/watch?v=VIDEO_ID" 
+    type="youtube" 
+    caption="Description of the video"
+/>
+
+### Local Video Example
+If you have a video file in `public/videos/my-video.mp4`:
+<Video 
+    src="/videos/my-video.mp4" 
+    type="local" 
+    caption="My local video"
+/>
+
+## Adding Podcast / Audio
+
+To add a podcast or audio file, use the `<Podcast />` component.
+
+<Podcast 
+    src="/audio/my-episode.mp3" 
+    caption="Episode 1: Introduction" 
+    title="My Podcast Episode"
+/>
+
+## Conclusion
+
+Wrap up your post here.
