@@ -68,7 +68,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         "@context": "https://schema.org",
-                        "@type": post.meta.category === "Book Session" ? "Review" : post.meta.category === "Life Stories" ? "Article" : "BlogPosting",
+                        "@type": post.meta.category === "Book Session" ? "Review" : (post.meta.category === "Life Stories" || post.meta.category === "Lifestyle") ? "Article" : "BlogPosting",
                         headline: post.meta.title,
                         datePublished: post.meta.date,
                         dateModified: post.meta.date,
