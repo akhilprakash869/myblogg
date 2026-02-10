@@ -24,20 +24,12 @@ export function Navbar() {
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center gap-6">
-                        {categories.slice(0, 5).map((category) => (
-                            <Link
-                                key={category}
-                                href={`/category/${category.toLowerCase().replace(/ & /g, "-").replace(/ /g, "-")}`}
-                                className="text-sm font-medium text-gray-300 transition-colors hover:text-white"
-                            >
-                                {category}
-                            </Link>
-                        ))}
-                        {categories.length > 5 && (
-                            <Link href="/blog" className="text-sm font-medium text-gray-400 hover:text-white">
-                                More...
-                            </Link>
-                        )}
+                        <Link href="/category/life-story" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Life Story</Link>
+                        <Link href="/category/lifestyle" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Lifestyle</Link>
+                        <Link href="/category/online-security" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Online Security</Link>
+                        <Link href="/category/politics" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Politics</Link>
+                        <Link href="/category/technology" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Technology</Link>
+                        <Link href="/category/research-lab" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Research Lab</Link>
                     </div>
                 </div>
 
@@ -61,15 +53,12 @@ export function Navbar() {
             {/* Mobile Horizontal Scroll for Categories */}
             <div className="lg:hidden border-t border-[#333] overflow-x-auto">
                 <div className="flex items-center gap-6 px-4 py-3 min-w-max">
-                    {categories.map((category) => (
-                        <Link
-                            key={category}
-                            href={`/category/${category.toLowerCase().replace(/ & /g, "-").replace(/ /g, "-")}`}
-                            className="text-sm font-medium text-gray-300 whitespace-nowrap"
-                        >
-                            {category}
-                        </Link>
-                    ))}
+                    <Link href="/category/life-story" className="text-sm font-medium text-gray-300 whitespace-nowrap">Life Story</Link>
+                    <Link href="/category/lifestyle" className="text-sm font-medium text-gray-300 whitespace-nowrap">Lifestyle</Link>
+                    <Link href="/category/online-security" className="text-sm font-medium text-gray-300 whitespace-nowrap">Online Security</Link>
+                    <Link href="/category/politics" className="text-sm font-medium text-gray-300 whitespace-nowrap">Politics</Link>
+                    <Link href="/category/technology" className="text-sm font-medium text-gray-300 whitespace-nowrap">Technology</Link>
+                    <Link href="/category/research-lab" className="text-sm font-medium text-gray-300 whitespace-nowrap">Research Lab</Link>
                 </div>
             </div>
         </nav>
