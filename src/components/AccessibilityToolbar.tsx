@@ -146,17 +146,47 @@ export function AccessibilityToolbar() {
     };
 
     const toggleLanguage = () => {
-        const selectMenu = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+        if (!isMalayalam) {
+            // Translate to Malayalam
+            const selectMenu = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+            if (selectMenu) {
+                selectMenu.value = 'ml';
+                selectMenu.dispatchEvent(new Event('change'));
+                setIsMalayalam(true);
+            }
+        } else {
+            // Revert to English (Original)
+            // The Google widget iframe natively has a "Restore Original" button
+            // If we can't click it, the reliable way is clearing the 'googtrans' cookie and reloading the iframe/page
+            const iframe = document.getElementById(':1.container') as HTMLIFrameElement;
+            if (iframe) {
+                const restoreBtn = iframe.contentWindow?.document.getElementById(':1.restore') as HTMLButtonElement;
+                if (restoreBtn) {
+                    restoreBtn.click();
+                    setIsMalayalam(false);
+                    return;
+                }
+            }
 
-        if (!selectMenu) {
-            console.error("Google Translate script has not finished loading.");
-            return;
+            // Fallback: Clear cookies and fully reset the widget state
+            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + location.hostname + "; path=/;";
+
+            // Dispatch a reload event or reload the page to cleanly wipe the DOM if needed.
+            // For a SPA, doing a hard refresh is jarring. Let's try simulating the 'Auto' change instead.
+            const selectMenu = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+            if (selectMenu) {
+                // Usually selectMenu value '' means default/original
+                selectMenu.value = '';
+                selectMenu.dispatchEvent(new Event('change'));
+            }
+            setIsMalayalam(false);
+
+            // If it still fails, force a smooth reload
+            setTimeout(() => {
+                window.location.reload();
+            }, 300);
         }
-
-        const targetLang = isMalayalam ? 'en' : 'ml';
-        selectMenu.value = targetLang;
-        selectMenu.dispatchEvent(new Event('change'));
-        setIsMalayalam(!isMalayalam);
     };
 
     return (
