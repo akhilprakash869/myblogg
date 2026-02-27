@@ -10,23 +10,35 @@ export function AccessibilityToolbar() {
     const [isMuted, setIsMuted] = useState(false);
     const [isMalayalam, setIsMalayalam] = useState(false);
     const [supported, setSupported] = useState(true);
+    const [voicesLoaded, setVoicesLoaded] = useState(false);
     const initialized = useRef(false);
 
     // Initialize Speech Synthesis and Google Translate
     useEffect(() => {
         if (typeof window !== "undefined" && !("speechSynthesis" in window)) {
             setSupported(false);
+        } else {
+            // Chrome loads voices asynchronously
+            const loadVoices = () => {
+                if (window.speechSynthesis.getVoices().length > 0) {
+                    setVoicesLoaded(true);
+                }
+            };
+            loadVoices();
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                window.speechSynthesis.onvoiceschanged = loadVoices;
+            }
         }
 
         if (initialized.current) return;
         initialized.current = true;
 
-        // Initialize Google Translate Element silently
+        // Initialize Google Translate Element silently but ensure it renders
         const initScript = document.createElement("script");
         initScript.innerHTML = `
             function googleTranslateElementInit() {
                 new window.google.translate.TranslateElement(
-                    { pageLanguage: 'en', includedLanguages: 'ml', layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false },
+                    { pageLanguage: 'en', includedLanguages: 'ml', autoDisplay: false },
                     'google_translate_element'
                 );
             }
@@ -49,6 +61,7 @@ export function AccessibilityToolbar() {
     useEffect(() => {
         if (!supported) return;
         const checkStatus = setInterval(() => {
+            // Keep state in sync with actual speech synthesis engine
             if (!window.speechSynthesis.speaking && isSpeaking && !isPaused) {
                 setIsSpeaking(false);
                 setIsPaused(false);
@@ -72,33 +85,47 @@ export function AccessibilityToolbar() {
             window.speechSynthesis.resume();
             setIsPaused(false);
         } else {
-            window.speechSynthesis.cancel();
+            window.speechSynthesis.cancel(); // Clear any existing queue
 
             // Extract pure text from the blog content container
             const contentElement = document.getElementById('blog-content');
-            const textToRead = contentElement ? contentElement.innerText : "Sorry, could not find the article content.";
+            let textToRead = contentElement ? contentElement.innerText : "Sorry, could not find the article content.";
 
-            const utterance = new SpeechSynthesisUtterance(textToRead);
-            utterance.volume = isMuted ? 0 : volume;
+            // Web Speech API has a bug in Chrome where long texts stop playing after ~15 seconds.
+            // Fix: Chunk the text by sentences or punctuation and queue them.
+            const sentences = textToRead.match(/[^.!?]+[.!?]+/g) || [textToRead];
 
-            // Attempt to find a local Malayalam voice (or fallback to English)
             const voices = window.speechSynthesis.getVoices();
-            const preferredVoice = voices.find(v => v.lang.includes('ml')) || voices.find(v => v.lang.includes('en-IN')) || voices.find(v => v.lang.includes('en'));
-            if (preferredVoice) {
-                utterance.voice = preferredVoice;
-            }
+            const preferredVoice = voices.find(v => v.lang.includes('ml')) ||
+                voices.find(v => v.lang.includes('en-IN')) ||
+                voices.find(v => v.lang.includes('en'));
 
-            utterance.onend = () => {
-                setIsSpeaking(false);
-                setIsPaused(false);
-            };
+            const actualVolume = isMuted ? 0 : volume;
 
-            utterance.onerror = () => {
-                setIsSpeaking(false);
-                setIsPaused(false);
-            };
+            sentences.forEach((sentence, index) => {
+                const utterance = new SpeechSynthesisUtterance(sentence.trim());
+                utterance.volume = actualVolume;
+                if (preferredVoice) {
+                    utterance.voice = preferredVoice;
+                }
 
-            window.speechSynthesis.speak(utterance);
+                // Only attach end event to the very last chunk to reset state
+                if (index === sentences.length - 1) {
+                    utterance.onend = () => {
+                        setIsSpeaking(false);
+                        setIsPaused(false);
+                    };
+                }
+
+                utterance.onerror = (e) => {
+                    console.error("TTS Error:", e);
+                    setIsSpeaking(false);
+                    setIsPaused(false);
+                };
+
+                window.speechSynthesis.speak(utterance);
+            });
+
             setIsSpeaking(true);
             setIsPaused(false);
         }
@@ -112,15 +139,20 @@ export function AccessibilityToolbar() {
 
     const handleStop = () => {
         if (!supported) return;
-        window.speechSynthesis.cancel();
+        window.speechSynthesis.cancel(); // Empties the queue
         setIsSpeaking(false);
         setIsPaused(false);
     };
 
     const toggleLanguage = () => {
-        // Find the iframe/select element generated by Google Translate
+        // Find the native Google Translate select element
+        // Since we are not keeping the container as display: none anymore, it will exist.
         const selectMenu = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-        if (!selectMenu) return; // Might still be loading
+
+        if (!selectMenu) {
+            console.error("Google Translate script has not finished loading or rendering.");
+            return;
+        }
 
         const targetLang = isMalayalam ? 'en' : 'ml';
         selectMenu.value = targetLang;
@@ -131,8 +163,8 @@ export function AccessibilityToolbar() {
     return (
         <div className="flex flex-wrap items-center justify-center gap-4 rounded-2xl border border-white/10 bg-black/40 p-3 shadow-lg backdrop-blur-md sm:justify-start">
 
-            {/* Hidden native Google Widget */}
-            <div id="google_translate_element" className="hidden" />
+            {/* Google Translate element needs to be technically rendered for the script to generate .goog-te-combo, so we use clip masking instead of hidden/display:none */}
+            <div id="google_translate_element" style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }} />
 
             {/* TTS Controls */}
             {supported && (
