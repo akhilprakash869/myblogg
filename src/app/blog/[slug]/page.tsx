@@ -6,8 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, User } from "lucide-react";
 import { notFound } from "next/navigation";
 import remarkUnwrapImages from "remark-unwrap-images";
-import { TTSButton } from "@/components/TTSButton";
-import { TranslationWidget } from "@/components/TranslationWidget";
+import { AccessibilityToolbar } from "@/components/AccessibilityToolbar";
 
 export async function generateStaticParams() {
     const posts = getPostSlugs();
@@ -142,9 +141,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     )}
                 </div>
 
-                <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                    <TTSButton textToRead={post.content.replace(/[#*`_\[\]]/g, '')} />
-                    <TranslationWidget />
+                <div className="mt-8 flex justify-center">
+                    <AccessibilityToolbar />
                 </div>
                 {post.meta.featuredImage && (
                     <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-xl border border-[#333] bg-[#111]">
@@ -160,7 +158,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             </header>
 
             {/* Blog Content */}
-            <div className="prose prose-invert prose-lg mx-auto max-w-none">
+            <div id="blog-content" className="prose prose-invert prose-lg mx-auto max-w-none">
                 <MDXRemote
                     source={post.content}
                     components={MDXComponents}
