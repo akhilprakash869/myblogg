@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const posts = getAllPosts();
-    const baseUrl = "https://akhilprakash-myblog.vercel.app"; // Replace with your actual domain
+    const baseUrl = "https://akhilprakash.live"; // Replace with your actual domain
 
     const blogPosts = posts.map((post) => ({
         url: `${baseUrl}/blog/${post.slug}`,
