@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Play, Pause, Square, Volume2, Languages, VolumeX } from "lucide-react";
+import { Play, Pause, Square, Languages, Volume2, VolumeX } from "lucide-react";
 
 export function AccessibilityToolbar() {
     const [isSpeaking, setIsSpeaking] = useState(false);
@@ -10,30 +10,22 @@ export function AccessibilityToolbar() {
     const [isMuted, setIsMuted] = useState(false);
     const [isMalayalam, setIsMalayalam] = useState(false);
     const [supported, setSupported] = useState(true);
-    const [voicesLoaded, setVoicesLoaded] = useState(false);
     const initialized = useRef(false);
+    const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
     // Initialize Speech Synthesis and Google Translate
     useEffect(() => {
         if (typeof window !== "undefined" && !("speechSynthesis" in window)) {
             setSupported(false);
         } else {
-            // Chrome loads voices asynchronously
-            const loadVoices = () => {
-                if (window.speechSynthesis.getVoices().length > 0) {
-                    setVoicesLoaded(true);
-                }
-            };
-            loadVoices();
-            if (window.speechSynthesis.onvoiceschanged !== undefined) {
-                window.speechSynthesis.onvoiceschanged = loadVoices;
-            }
+            // Pre-load voices
+            window.speechSynthesis.getVoices();
         }
 
         if (initialized.current) return;
         initialized.current = true;
 
-        // Initialize Google Translate Element silently but ensure it renders
+        // Initialize Google Translate Element silently
         const initScript = document.createElement("script");
         initScript.innerHTML = `
             function googleTranslateElementInit() {
@@ -57,26 +49,38 @@ export function AccessibilityToolbar() {
         };
     }, []);
 
-    // Monitor TTS State
+    // Monitor TTS State & Anti-Cutoff Hack for Chrome
     useEffect(() => {
         if (!supported) return;
-        const checkStatus = setInterval(() => {
-            // Keep state in sync with actual speech synthesis engine
+
+        // Keep state in sync with actual speech synthesis engine
+        const statusCheck = setInterval(() => {
             if (!window.speechSynthesis.speaking && isSpeaking && !isPaused) {
                 setIsSpeaking(false);
                 setIsPaused(false);
             }
         }, 1000);
-        return () => clearInterval(checkStatus);
+
+        // Chrome bug workaround: TTS stops after ~15s. We briefly pause & resume every 14s.
+        const chromeAntiCutoff = setInterval(() => {
+            if (window.speechSynthesis.speaking && isSpeaking && !isPaused) {
+                window.speechSynthesis.pause();
+                window.speechSynthesis.resume();
+            }
+        }, 14000);
+
+        return () => {
+            clearInterval(statusCheck);
+            clearInterval(chromeAntiCutoff);
+        };
     }, [isSpeaking, isPaused, supported]);
 
-    // Volume Control effect handling
+    // Track volume changes actively on the current utterance and future ones
     useEffect(() => {
-        if (!supported || (!isSpeaking && !isPaused)) return;
-
-        // Unfortunately, changing volume mid-speech isn't universally supported in all browsers API
-        // But we apply it to any *new* speech utterances.
-    }, [volume, isMuted, supported, isSpeaking, isPaused]);
+        if (utteranceRef.current) {
+            utteranceRef.current.volume = isMuted ? 0 : volume;
+        }
+    }, [volume, isMuted]);
 
     const handlePlay = () => {
         if (!supported) return;
@@ -84,47 +88,42 @@ export function AccessibilityToolbar() {
         if (isPaused) {
             window.speechSynthesis.resume();
             setIsPaused(false);
+            setIsSpeaking(true);
         } else {
-            window.speechSynthesis.cancel(); // Clear any existing queue
+            window.speechSynthesis.cancel();
 
             // Extract pure text from the blog content container
             const contentElement = document.getElementById('blog-content');
             let textToRead = contentElement ? contentElement.innerText : "Sorry, could not find the article content.";
 
-            // Web Speech API has a bug in Chrome where long texts stop playing after ~15 seconds.
-            // Fix: Chunk the text by sentences or punctuation and queue them.
-            const sentences = textToRead.match(/[^.!?]+[.!?]+/g) || [textToRead];
+            const utterance = new SpeechSynthesisUtterance(textToRead);
+            utteranceRef.current = utterance;
 
             const voices = window.speechSynthesis.getVoices();
             const preferredVoice = voices.find(v => v.lang.includes('ml')) ||
                 voices.find(v => v.lang.includes('en-IN')) ||
                 voices.find(v => v.lang.includes('en'));
 
-            const actualVolume = isMuted ? 0 : volume;
+            if (preferredVoice) {
+                utterance.voice = preferredVoice;
+            }
 
-            sentences.forEach((sentence, index) => {
-                const utterance = new SpeechSynthesisUtterance(sentence.trim());
-                utterance.volume = actualVolume;
-                if (preferredVoice) {
-                    utterance.voice = preferredVoice;
-                }
+            utterance.volume = isMuted ? 0 : volume;
 
-                // Only attach end event to the very last chunk to reset state
-                if (index === sentences.length - 1) {
-                    utterance.onend = () => {
-                        setIsSpeaking(false);
-                        setIsPaused(false);
-                    };
-                }
+            utterance.onend = () => {
+                setIsSpeaking(false);
+                setIsPaused(false);
+                utteranceRef.current = null;
+            };
 
-                utterance.onerror = (e) => {
-                    console.error("TTS Error:", e);
-                    setIsSpeaking(false);
-                    setIsPaused(false);
-                };
+            utterance.onerror = (e) => {
+                console.error("TTS Error:", e);
+                setIsSpeaking(false);
+                setIsPaused(false);
+                utteranceRef.current = null;
+            };
 
-                window.speechSynthesis.speak(utterance);
-            });
+            window.speechSynthesis.speak(utterance);
 
             setIsSpeaking(true);
             setIsPaused(false);
@@ -135,35 +134,34 @@ export function AccessibilityToolbar() {
         if (!supported) return;
         window.speechSynthesis.pause();
         setIsPaused(true);
+        setIsSpeaking(true);
     };
 
     const handleStop = () => {
         if (!supported) return;
-        window.speechSynthesis.cancel(); // Empties the queue
+        window.speechSynthesis.cancel();
         setIsSpeaking(false);
         setIsPaused(false);
+        utteranceRef.current = null;
     };
 
     const toggleLanguage = () => {
-        // Find the native Google Translate select element
-        // Since we are not keeping the container as display: none anymore, it will exist.
         const selectMenu = document.querySelector('.goog-te-combo') as HTMLSelectElement;
 
         if (!selectMenu) {
-            console.error("Google Translate script has not finished loading or rendering.");
+            console.error("Google Translate script has not finished loading.");
             return;
         }
 
         const targetLang = isMalayalam ? 'en' : 'ml';
         selectMenu.value = targetLang;
-        selectMenu.dispatchEvent(new Event('change')); // Trigger translate native event
+        selectMenu.dispatchEvent(new Event('change'));
         setIsMalayalam(!isMalayalam);
     };
 
     return (
-        <div className="flex flex-wrap items-center justify-center gap-4 rounded-2xl border border-white/10 bg-black/40 p-3 shadow-lg backdrop-blur-md sm:justify-start">
+        <div className="notranslate flex flex-wrap items-center justify-center gap-4 rounded-2xl border border-white/10 bg-black/40 p-3 shadow-lg backdrop-blur-md sm:justify-start" translate="no">
 
-            {/* Google Translate element needs to be technically rendered for the script to generate .goog-te-combo, so we use clip masking instead of hidden/display:none */}
             <div id="google_translate_element" style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }} />
 
             {/* TTS Controls */}
@@ -173,7 +171,6 @@ export function AccessibilityToolbar() {
                         <button
                             onClick={handlePlay}
                             className="flex h-9 items-center gap-2 rounded-full bg-white/5 px-4 text-sm font-medium text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
-                            aria-label="Play Audio"
                         >
                             <Play className="h-4 w-4" fill="currentColor" />
                             {isPaused ? "Resume" : "Listen"}
@@ -183,19 +180,20 @@ export function AccessibilityToolbar() {
                             <button
                                 onClick={handlePause}
                                 className="flex h-9 items-center gap-2 rounded-full bg-white/10 px-4 text-sm font-medium text-white transition-colors hover:bg-white/20"
-                                aria-label="Pause Audio"
                             >
                                 <Pause className="h-4 w-4" fill="currentColor" />
                                 Pause
                             </button>
-                            <button
-                                onClick={handleStop}
-                                className="flex h-9 w-9 items-center justify-center rounded-full text-red-400 transition-colors hover:bg-red-500/10"
-                                aria-label="Stop playback"
-                            >
-                                <Square className="h-3.5 w-3.5" fill="currentColor" />
-                            </button>
                         </div>
+                    )}
+
+                    {isSpeaking && (
+                        <button
+                            onClick={handleStop}
+                            className="flex h-9 w-9 items-center justify-center rounded-full text-red-400 transition-colors hover:bg-red-500/10"
+                        >
+                            <Square className="h-3.5 w-3.5" fill="currentColor" />
+                        </button>
                     )}
 
                     {/* Volume Slider */}
@@ -227,7 +225,7 @@ export function AccessibilityToolbar() {
                         }`}
                 >
                     <Languages className="h-4 w-4" />
-                    <span>{isMalayalam ? "Read in English" : "മലയാളം (Malayalam)"}</span>
+                    <span>{isMalayalam ? "Read in English" : "Malayalam"}</span>
                 </button>
             </div>
         </div>

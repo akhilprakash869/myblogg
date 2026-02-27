@@ -14,7 +14,7 @@ export function Navbar() {
     const allPosts = getAllPosts();
 
     return (
-        <nav className="sticky top-0 z-50 w-full border-b border-[#333] bg-[#000]/80 backdrop-blur-md">
+        <nav className="notranslate sticky top-0 z-50 w-full border-b border-[#333] bg-[#000]/80 backdrop-blur-md" translate="no">
             <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
                 <div className="flex items-center gap-6">
                     <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tighter mr-4">

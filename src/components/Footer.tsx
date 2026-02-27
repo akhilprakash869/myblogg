@@ -2,7 +2,7 @@ import { Github, Twitter, Linkedin } from "lucide-react";
 
 export function Footer() {
     return (
-        <footer className="border-t border-[#333] bg-[#000] py-12 text-gray-400">
+        <footer className="border-t border-[#333] bg-[#000] py-12 text-gray-400 notranslate" translate="no">
             <div className="container mx-auto grid gap-8 px-4 md:px-6 md:grid-cols-3">
                 <div>
                     <h3 className="mb-4 text-lg font-bold text-white">MyBlog</h3>
