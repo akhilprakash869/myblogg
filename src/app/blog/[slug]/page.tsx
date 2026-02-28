@@ -20,9 +20,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         const { slug } = await params;
         const post = getPostBySlug(slug);
         return {
-            title: `${post.meta.title} - MyBlog`,
+            title: { absolute: post.meta.title },
             description: post.meta.excerpt,
             keywords: post.meta.keywords,
+            authors: [{ name: post.meta.author || "MyBlog" }],
             openGraph: {
                 title: post.meta.title,
                 description: post.meta.excerpt,
@@ -149,7 +150,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                             src={post.meta.featuredImage}
-                            alt={post.meta.title}
+                            alt={post.meta.imageAltText || post.meta.title}
                             className="h-full w-full object-cover"
                         />
                         <div className="absolute inset-0 bg-black/10 pointer-events-none" />
