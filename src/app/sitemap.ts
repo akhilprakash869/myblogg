@@ -3,48 +3,54 @@ import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const posts = getAllPosts();
-    const baseUrl = "https://akhilprakash.live"; // Replace with your actual domain
+    const baseUrl = "https://akhilprakash.live";
 
-    const blogPosts = posts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: post.meta.date,
-        changeFrequency: "monthly" as const,
-        priority: 0.7,
-    }));
+    // Strict YYYY-MM-DD format, safely stripped of time/timezone
+    const today = new Date().toISOString().split("T")[0];
 
-    // Dynamic Category Pages
+    // Map Blog Posts
+    const blogPosts = posts.map((post) => {
+        let dateString = today;
+        try {
+            if (post.meta.date) {
+                const parsedDate = new Date(post.meta.date);
+                if (!isNaN(parsedDate.getTime())) {
+                    dateString = parsedDate.toISOString().split("T")[0];
+                }
+            }
+        } catch (e) {
+            // Safe fallback
+        }
+
+        return {
+            url: `${baseUrl}/blog/${post.slug}`,
+            lastModified: dateString,
+        };
+    });
+
+    // Map Dynamic Category Pages
     const categories = Array.from(new Set(posts.map((post) => post.meta.category).filter(Boolean)));
     const categoryPages = categories.map((category) => ({
         url: `${baseUrl}/category/${category!.toLowerCase().replace(/ & /g, "-").replace(/ /g, "-")}`,
-        lastModified: new Date(),
-        changeFrequency: "weekly" as const,
-        priority: 0.8,
+        lastModified: today,
     }));
 
     return [
         {
             url: baseUrl,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 1,
+            lastModified: today,
         },
         {
             url: `${baseUrl}/blog`,
-            lastModified: new Date(),
-            changeFrequency: "daily",
-            priority: 0.8,
+            lastModified: today,
         },
         {
             url: `${baseUrl}/about`,
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.5,
+            lastModified: today,
         },
         {
             url: `${baseUrl}/contact`,
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.5,
+            lastModified: today,
         },
         ...categoryPages,
         ...blogPosts,
