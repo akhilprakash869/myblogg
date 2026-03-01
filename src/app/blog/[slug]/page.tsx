@@ -7,6 +7,7 @@ import { ArrowLeft, User } from "lucide-react";
 import { notFound } from "next/navigation";
 import remarkUnwrapImages from "remark-unwrap-images";
 import { AccessibilityToolbar } from "@/components/AccessibilityToolbar";
+import { SubscribeForm } from "@/components/SubscribeForm";
 
 export async function generateStaticParams() {
     const posts = getPostSlugs();
@@ -187,16 +188,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <div className="mt-16 rounded-2xl border border-[#333] bg-[#111] p-8 text-center">
                 <h3 className="mb-2 text-xl font-bold text-white">Subscribe to the newsletter</h3>
                 <p className="mb-6 text-gray-400">Get the latest posts delivered right to your inbox.</p>
-                <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-                    <input
-                        type="email"
-                        placeholder="Enter your email"
-                        className="rounded-full border border-[#333] bg-black px-4 py-2 text-white placeholder-gray-500 focus:border-white focus:outline-none"
-                    />
-                    <button className="rounded-full bg-white px-6 py-2 font-medium text-black transition-colors hover:bg-gray-200">
-                        Subscribe
-                    </button>
-                </div>
+                <SubscribeForm />
             </div>
 
         </article>

@@ -28,8 +28,8 @@ export function Navbar() {
                         <Link href="/category/lifestyle" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Lifestyle</Link>
                         <Link href="/category/online-security" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Online Security</Link>
                         <Link href="/category/politics" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Politics</Link>
-                        <Link href="/category/technology" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Technology</Link>
                         <Link href="/category/research-lab" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Research Lab</Link>
+                        <Link href="/category/technology" className="text-sm font-medium text-gray-300 transition-colors hover:text-white">Technology</Link>
                     </div>
                 </div>
 
@@ -57,8 +57,8 @@ export function Navbar() {
                     <Link href="/category/lifestyle" className="text-sm font-medium text-gray-300 whitespace-nowrap">Lifestyle</Link>
                     <Link href="/category/online-security" className="text-sm font-medium text-gray-300 whitespace-nowrap">Online Security</Link>
                     <Link href="/category/politics" className="text-sm font-medium text-gray-300 whitespace-nowrap">Politics</Link>
-                    <Link href="/category/technology" className="text-sm font-medium text-gray-300 whitespace-nowrap">Technology</Link>
                     <Link href="/category/research-lab" className="text-sm font-medium text-gray-300 whitespace-nowrap">Research Lab</Link>
+                    <Link href="/category/technology" className="text-sm font-medium text-gray-300 whitespace-nowrap">Technology</Link>
                 </div>
             </div>
         </nav>
