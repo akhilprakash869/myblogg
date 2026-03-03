@@ -45,10 +45,10 @@ export function MobileMenu() {
             </button>
 
             <div
-                className={`fixed inset-x-0 top-16 bottom-0 z-40 flex flex-col bg-[#000]/95 backdrop-blur-xl border-t border-[#333] transition-all duration-300 ease-in-out ${isOpen ? "opacity-100 translate-y-0 visible" : "opacity-0 -translate-y-4 invisible pointer-events-none"
+                className={`absolute left-0 right-0 top-full h-[calc(100vh-4rem)] z-40 flex flex-col bg-[#000]/95 backdrop-blur-xl border-t border-[#333] transition-all duration-300 ease-in-out ${isOpen ? "opacity-100 translate-y-0 visible" : "opacity-0 -translate-y-4 invisible pointer-events-none"
                     }`}
             >
-                <div className="flex-1 overflow-y-auto px-6 py-8">
+                <div className="flex-1 overflow-y-auto px-6 py-8 pb-32">
                     <nav className="flex flex-col gap-6">
                         {links.map((link) => (
                             <Link
