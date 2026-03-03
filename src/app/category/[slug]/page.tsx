@@ -49,6 +49,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         "politics": "A neutral, analytical space to understand the systems that govern us. Here, we break down political concepts, policies, and governance structures without partisan bias or propaganda. The goal is to foster political awareness and rapid understanding of complex issues through fact-based analysis.",
         "technology": "From coding to open-source tools, this is a practical guide for developers and enthusiasts. Whether you're a beginner looking to write your first line of code or an intermediate developer exploring new frameworks, these articles provide hands-on insights and tutorials to help you build and create.",
         "research-lab": "Welcome to my open notebook. This section contains independent research notes, experiments, and observations from my personal learning journey. It's a space for curiosity and transparency, where I document what I'm exploring. Disclaimer: Content is for educational and learning purposes only.",
+        "books-newsletters": "A collection of notes, summaries, and reviews of the books I read and the newsletters I follow. From diplomacy and history to science and habit-building, this section acts as a digital library of my reading journey.",
     };
 
     const description = categoryDescriptions[slug.toLowerCase()] || `Latest articles and insights in ${categoryName}.`;

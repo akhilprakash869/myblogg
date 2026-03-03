@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             keywords: post.meta.keywords,
             authors: [{ name: post.meta.author || "MyBlog" }],
             openGraph: {
-                title: post.meta.title,
-                description: post.meta.excerpt,
+                title: post.meta.ogTitle || post.meta.title,
+                description: post.meta.ogDescription || post.meta.excerpt,
                 type: "article",
                 publishedTime: post.meta.date,
                 authors: [post.meta.author || "MyBlog"],
@@ -35,8 +35,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             },
             twitter: {
                 card: "summary_large_image",
-                title: post.meta.title,
-                description: post.meta.excerpt,
+                title: post.meta.ogTitle || post.meta.title,
+                description: post.meta.twitterDescription || post.meta.excerpt,
                 images: post.meta.featuredImage ? [post.meta.featuredImage] : [],
             },
         };
@@ -71,12 +71,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         "@context": "https://schema.org",
-                        "@type": post.meta.category === "Book Session" ? "Review" : (post.meta.category === "Life Stories" || post.meta.category === "Lifestyle") ? "Article" : "BlogPosting",
+                        "@type": (post.meta.category === "Book Session" || post.meta.category === "Books & Newsletters") ? "Review" : (post.meta.category === "Life Stories" || post.meta.category === "Lifestyle") ? "Article" : "BlogPosting",
                         headline: post.meta.title,
                         datePublished: post.meta.date,
                         dateModified: post.meta.date,
                         description: post.meta.excerpt,
-                        image: post.meta.featuredImage ? [post.meta.featuredImage] : [],
+                        image: post.meta.featuredImage ? [`https://akhilprakash-myblog.vercel.app${post.meta.featuredImage}`] : [],
                         author: {
                             "@type": "Person",
                             name: post.meta.author || "Akhil Prakash",
@@ -93,13 +93,13 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                             "@type": "WebPage",
                             "@id": `https://akhilprakash-myblog.vercel.app/blog/${slug}`
                         },
-                        ...(post.meta.category === "Book Session" && {
+                        ...((post.meta.category === "Book Session" || post.meta.category === "Books & Newsletters") && {
                             itemReviewed: {
                                 "@type": "Book",
-                                name: post.meta.title.replace("Review: ", ""), // Assessing title format
+                                name: post.meta.title.replace("Review: ", "").replace(" Review | Ruchi Ghanashyam", ""), // Assessing title format
                                 author: {
                                     "@type": "Person",
-                                    name: "Unknown" // Ideally should be in frontmatter
+                                    name: "Ruchi Ghanashyam" // Set specific to the requirement
                                 }
                             },
                             reviewRating: {
@@ -152,7 +152,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                         <img
                             src={post.meta.featuredImage}
                             alt={post.meta.imageAltText || post.meta.title}
-                            className="h-full w-full object-cover"
+                            className="h-full w-full object-contain"
                         />
                         <div className="absolute inset-0 bg-black/10 pointer-events-none" />
                     </div>
