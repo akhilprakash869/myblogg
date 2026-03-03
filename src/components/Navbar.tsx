@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getAllCategories, getAllPosts } from "@/lib/mdx";
 import { Search } from "@/components/Search";
-import { Menu, User } from "lucide-react";
+import { User } from "lucide-react";
+import { MobileMenu } from "@/components/MobileMenu";
 
 export function Navbar() {
     const categories = getAllCategories();
@@ -45,22 +46,7 @@ export function Navbar() {
                         <span>Sign In</span>
                     </Link>
 
-                    {/* Mobile Menu Button - Placeholder for now, could implement a real mobile drawer */}
-                    <button className="lg:hidden text-gray-300 hover:text-white">
-                        <Menu className="h-6 w-6" />
-                    </button>
-                </div>
-            </div>
-            {/* Mobile Horizontal Scroll for Categories */}
-            <div className="lg:hidden border-t border-[#333] overflow-x-auto">
-                <div className="flex items-center gap-6 px-4 py-3 min-w-max">
-                    <Link href="/category/life-story" className="text-sm font-medium text-gray-300 whitespace-nowrap">Life Story</Link>
-                    <Link href="/category/lifestyle" className="text-sm font-medium text-gray-300 whitespace-nowrap">Lifestyle</Link>
-                    <Link href="/category/online-security" className="text-sm font-medium text-gray-300 whitespace-nowrap">Online Security</Link>
-                    <Link href="/category/politics" className="text-sm font-medium text-gray-300 whitespace-nowrap">Politics</Link>
-                    <Link href="/category/research-lab" className="text-sm font-medium text-gray-300 whitespace-nowrap">Research Lab</Link>
-                    <Link href="/category/technology" className="text-sm font-medium text-gray-300 whitespace-nowrap">Technology</Link>
-                    <Link href="/category/books-newsletters" className="text-sm font-medium text-gray-300 whitespace-nowrap">Books & Newsletters</Link>
+                    <MobileMenu />
                 </div>
             </div>
         </nav>
