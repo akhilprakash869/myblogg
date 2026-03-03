@@ -94,11 +94,14 @@ export function AccessibilityToolbar() {
             <div className="flex items-center">
                 <button
                     onClick={toggleLanguage}
-                    className={`flex h-9 items-center gap-2 rounded-full px-4 text-sm font-medium transition-colors ${isMalayalam ? "bg-blue-500/20 text-blue-300 hover:bg-blue-500/30" : "bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white"
+                    className={`flex h-10 items-center gap-3 rounded-full border px-5 text-sm font-semibold shadow-sm transition-all duration-300 hover:scale-105 active:scale-95 ${isMalayalam
+                            ? "border-blue-500/50 bg-blue-500/20 text-blue-300 hover:bg-blue-500/30"
+                            : "border-white/10 bg-white/5 text-gray-200 hover:bg-white/10 hover:text-white"
                         }`}
+                    aria-label={isMalayalam ? "Read in English" : "Translate to Malayalam"}
                 >
-                    <Languages className="h-4 w-4" />
-                    <span>{isMalayalam ? "Read in English" : "Malayalam"}</span>
+                    <Languages className="h-5 w-5" />
+                    <span>{isMalayalam ? "Read in English" : "Translate to Malayalam"}</span>
                 </button>
             </div>
         </div>
