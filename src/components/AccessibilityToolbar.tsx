@@ -9,10 +9,16 @@ export function AccessibilityToolbar() {
 
     // Initialize Google Translate Element silently and patch DOM to prevent React crashes
     useEffect(() => {
-        // Sync state from cookie on mount
-        if (document.cookie.includes('googtrans=/en/ml') || document.cookie.includes('googtrans=/auto/ml')) {
-            setIsMalayalam(true);
-        }
+        // FORCE DEFAULT ENGLISH on mount:
+        // Delete any existing Google Translate cookies to prevent automatic translation from prior sessions
+        const domains = [window.location.hostname, `.${window.location.hostname}`];
+        domains.forEach(domain => {
+            document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=/;`;
+            document.cookie = `googtrans=/auto/en; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=/;`;
+            document.cookie = `googtrans=/en/ml; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=/;`;
+            document.cookie = `googtrans=/auto/ml; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=/;`;
+        });
+        document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
         if (initialized.current) return;
         initialized.current = true;
