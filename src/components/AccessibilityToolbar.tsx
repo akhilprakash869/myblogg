@@ -63,25 +63,27 @@ export function AccessibilityToolbar() {
                 setIsMalayalam(true);
             }
         } else {
-            // Revert to English (Original)
-            // The iframe approach is unreliable across browsers and Next.js routing.
-            // The most bulletproof way is to clear the googtrans cookie and reload.
-
-            // Clear cookie on exact domain
-            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${window.location.hostname}; path=/;`;
-            // Clear cookie on base domain (if applicable)
-            document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.${window.location.hostname}; path=/;`;
-
-            const selectMenu = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-            if (selectMenu) {
-                selectMenu.value = 'en'; // Try setting to English explicitly first
-                selectMenu.dispatchEvent(new Event('change'));
-            }
+            // Revert to English
+            // The iframe and select API approach is unreliable across browsers and Next.js routing.
+            // The most bulletproof way to kill the translation and its sticky cache is an aggressive cookie wipe and reload.
 
             setIsMalayalam(false);
 
-            // Force reload to completely wipe the Google Translate DOM modifications
+            const domains = [window.location.hostname, `.${window.location.hostname}`];
+            const paths = ['/', '/blog', window.location.pathname];
+
+            domains.forEach(domain => {
+                paths.forEach(path => {
+                    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=${path};`;
+                    document.cookie = `googtrans=/en/en; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=${path};`;
+                    document.cookie = `googtrans=/auto/en; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=${path};`;
+                    document.cookie = `googtrans=/en/ml; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=${path};`;
+                    document.cookie = `googtrans=/auto/ml; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=${path};`;
+                });
+            });
+            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            // Force reload to completely wipe the Google Translate DOM modifications inside React
             window.location.reload();
         }
     };
@@ -95,8 +97,8 @@ export function AccessibilityToolbar() {
                 <button
                     onClick={toggleLanguage}
                     className={`flex h-10 items-center gap-3 rounded-full border px-5 text-sm font-semibold shadow-sm transition-all duration-300 hover:scale-105 active:scale-95 ${isMalayalam
-                            ? "border-blue-500/50 bg-blue-500/20 text-blue-300 hover:bg-blue-500/30"
-                            : "border-white/10 bg-white/5 text-gray-200 hover:bg-white/10 hover:text-white"
+                        ? "border-blue-500/50 bg-blue-500/20 text-blue-300 hover:bg-blue-500/30"
+                        : "border-white/10 bg-white/5 text-gray-200 hover:bg-white/10 hover:text-white"
                         }`}
                     aria-label={isMalayalam ? "Read in English" : "Translate to Malayalam"}
                 >
