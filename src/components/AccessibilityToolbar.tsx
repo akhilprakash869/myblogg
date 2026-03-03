@@ -7,10 +7,34 @@ export function AccessibilityToolbar() {
     const [isMalayalam, setIsMalayalam] = useState(false);
     const initialized = useRef(false);
 
-    // Initialize Google Translate Element silently
+    // Initialize Google Translate Element silently and patch DOM to prevent React crashes
     useEffect(() => {
+        // Sync state from cookie on mount
+        if (document.cookie.includes('googtrans=/en/ml') || document.cookie.includes('googtrans=/auto/ml')) {
+            setIsMalayalam(true);
+        }
+
         if (initialized.current) return;
         initialized.current = true;
+
+        // Patch DOM to prevent React NotFoundError crashes caused by Google Translate injecting <font> tags
+        if (typeof Node === 'function' && Node.prototype) {
+            const originalRemoveChild = Node.prototype.removeChild;
+            Node.prototype.removeChild = function <T extends Node>(child: T): T {
+                if (child.parentNode !== this) {
+                    return child;
+                }
+                return originalRemoveChild.apply(this, [child]) as T;
+            };
+
+            const originalInsertBefore = Node.prototype.insertBefore;
+            Node.prototype.insertBefore = function <T extends Node>(newNode: T, referenceNode: Node | null): T {
+                if (referenceNode && referenceNode.parentNode !== this) {
+                    return newNode;
+                }
+                return originalInsertBefore.apply(this, [newNode, referenceNode]) as T;
+            };
+        }
 
         const initScript = document.createElement("script");
         initScript.innerHTML = `
