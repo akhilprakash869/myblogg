@@ -92,7 +92,9 @@ body {
   display: none !important;
 }
 
-.goog-te-banner-frame.skiptranslate {
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+.skiptranslate {
   display: none !important;
 }
 
