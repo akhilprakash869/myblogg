@@ -16,6 +16,7 @@ export type Post = {
         draft?: boolean;
         readTime?: string;
         author?: string;
+        language?: string;
         featuredImage?: string;
         keywords?: string[];
         [key: string]: any;

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, User } from "lucide-react";
 import { notFound } from "next/navigation";
 import remarkUnwrapImages from "remark-unwrap-images";
+import remarkGfm from "remark-gfm";
 import { AccessibilityToolbar } from "@/components/AccessibilityToolbar";
 import { SubscribeForm } from "@/components/SubscribeForm";
 
@@ -144,7 +145,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 </div>
 
                 <div className="mt-8 flex justify-center">
-                    <AccessibilityToolbar />
+                    <AccessibilityToolbar language={post.meta.language || "en"} />
                 </div>
                 {post.meta.featuredImage && (
                     <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-xl border border-[#333] bg-[#111]">
@@ -166,7 +167,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     components={MDXComponents}
                     options={{
                         mdxOptions: {
-                            remarkPlugins: [remarkUnwrapImages],
+                            remarkPlugins: [remarkUnwrapImages, remarkGfm],
                         },
                     }}
                 />
