@@ -3,6 +3,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Video } from "@/components/Video";
 import { Podcast } from "@/components/Podcast";
+import { BilingualWrapper, EnglishContent, MalayalamContent } from "@/components/BilingualContent";
 
 export const MDXComponents = {
     h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -91,4 +92,7 @@ export const MDXComponents = {
     Link: (props: any) => <Link {...props} />,
     Video: (props: any) => <Video {...props} />,
     Podcast: (props: any) => <Podcast {...props} />,
+    BilingualWrapper: (props: any) => <BilingualWrapper {...props} />,
+    EnglishContent: (props: any) => <EnglishContent {...props} />,
+    MalayalamContent: (props: any) => <MalayalamContent {...props} />,
 };
