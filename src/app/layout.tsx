@@ -43,6 +43,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <head>
         <meta name="google" content="notranslate" />
+        <meta name="google-adsense-account" content="ca-pub-6306618646440187" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-black text-white`}
