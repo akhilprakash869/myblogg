@@ -18,13 +18,19 @@ export function Hero() {
                     <span className="tracking-widest uppercase text-xs font-semibold text-zinc-200">Thoughts, Stories & Ideas</span>
                 </div>
 
-                {/* Main Hero Title - Massive Single-Line Bold Characters */}
-                <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.5rem] font-black tracking-tight leading-none whitespace-nowrap">
-                    <span className="text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.3)]">
-                        Simple{" "}
+                {/* Main Hero Title - Massive Single-Line Bold Characters with Square Boxed S and T */}
+                <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6rem] font-black tracking-tight leading-none whitespace-nowrap flex items-center justify-center gap-3 sm:gap-5">
+                    <span className="inline-flex items-center text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+                        <span className="inline-flex items-center justify-center rounded-2xl border-2 border-white bg-white text-black w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mr-1 sm:mr-2 shadow-[0_0_35px_rgba(255,255,255,0.4)] shrink-0">
+                            S
+                        </span>
+                        imple
                     </span>
-                    <span className="bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
-                        Thoughts.
+                    <span className="inline-flex items-center text-zinc-100">
+                        <span className="inline-flex items-center justify-center rounded-2xl border-2 border-zinc-600 bg-zinc-900/90 text-white w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mr-1 sm:mr-2 shadow-lg shrink-0">
+                            T
+                        </span>
+                        houghts.
                     </span>
                 </h1>
 
