@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export function MobileMenu() {
@@ -60,17 +60,6 @@ export function MobileMenu() {
                             </Link>
                         ))}
                     </nav>
-
-                    <div className="mt-12 pt-8 border-t border-zinc-800">
-                        <Link
-                            href="/login"
-                            onClick={() => setIsOpen(false)}
-                            className="font-display flex w-full items-center justify-center gap-2.5 rounded-full bg-white text-black py-4 text-lg font-bold transition-transform active:scale-95 shadow-lg"
-                        >
-                            <User className="h-5 w-5" />
-                            <span>Sign In</span>
-                        </Link>
-                    </div>
                 </div>
             </div>
         </div>

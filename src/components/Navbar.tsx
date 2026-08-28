@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getAllCategories, getAllPosts } from "@/lib/mdx";
 import { Search } from "@/components/Search";
-import { User } from "lucide-react";
 import { MobileMenu } from "@/components/MobileMenu";
 
 export function Navbar() {
@@ -45,15 +44,6 @@ export function Navbar() {
 
                 <div className="flex items-center gap-4 shrink-0">
                     <Search posts={allPosts} />
-
-                    <Link
-                        href="/login"
-                        className="hidden md:flex items-center gap-2.5 font-display text-lg font-bold text-zinc-100 border border-zinc-700/80 bg-zinc-900/90 px-6 py-2.5 rounded-full transition-all duration-200 hover:bg-white hover:text-black hover:border-white shadow-sm whitespace-nowrap"
-                    >
-                        <User className="h-5 w-5" />
-                        <span className="whitespace-nowrap">Sign In</span>
-                    </Link>
-
                     <MobileMenu />
                 </div>
             </div>
