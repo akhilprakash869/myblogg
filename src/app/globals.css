@@ -20,7 +20,20 @@
   --color-card: var(--card);
   --color-border: var(--border);
   --font-sans: var(--font-geist-sans), sans-serif;
+  --font-display: var(--font-outfit), var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
+}
+
+.font-display {
+  font-family: var(--font-outfit), var(--font-geist-sans), sans-serif;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 body {

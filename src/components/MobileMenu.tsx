@@ -9,12 +9,10 @@ export function MobileMenu() {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
 
-    // Close menu when route changes
     useEffect(() => {
         setIsOpen(false);
     }, [pathname]);
 
-    // Prevent body scroll when menu is open
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
@@ -35,27 +33,27 @@ export function MobileMenu() {
     ];
 
     return (
-        <div className="lg:hidden">
+        <div className="xl:hidden">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-gray-300 hover:text-white transition-colors flex items-center justify-center p-1"
+                className="text-zinc-300 hover:text-white transition-colors flex items-center justify-center p-2 rounded-lg border border-zinc-800 bg-zinc-900/80"
                 aria-label="Toggle mobile menu"
             >
-                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
             </button>
 
             <div
-                className={`absolute left-0 right-0 top-full h-[calc(100vh-4rem)] z-40 flex flex-col bg-[#000]/95 backdrop-blur-xl border-t border-[#333] transition-all duration-300 ease-in-out ${isOpen ? "opacity-100 translate-y-0 visible" : "opacity-0 -translate-y-4 invisible pointer-events-none"
+                className={`absolute left-0 right-0 top-full h-[calc(100vh-5rem)] z-40 flex flex-col bg-black/95 backdrop-blur-2xl border-t border-zinc-800 transition-all duration-300 ease-in-out ${isOpen ? "opacity-100 translate-y-0 visible" : "opacity-0 -translate-y-4 invisible pointer-events-none"
                     }`}
             >
-                <div className="flex-1 overflow-y-auto px-6 py-8 pb-32">
+                <div className="flex-1 overflow-y-auto px-8 py-10 pb-32">
                     <nav className="flex flex-col gap-6">
                         {links.map((link) => (
                             <Link
                                 key={link.href}
                                 href={link.href}
                                 onClick={() => setIsOpen(false)}
-                                className={`text-2xl font-bold tracking-tight transition-colors ${pathname === link.href ? "text-white" : "text-gray-400 hover:text-white"
+                                className={`font-display text-3xl font-black tracking-tight transition-colors ${pathname === link.href ? "text-white underline underline-offset-8" : "text-zinc-400 hover:text-white"
                                     }`}
                             >
                                 {link.label}
@@ -63,11 +61,11 @@ export function MobileMenu() {
                         ))}
                     </nav>
 
-                    <div className="mt-12 pt-8 border-t border-[#333]">
+                    <div className="mt-12 pt-8 border-t border-zinc-800">
                         <Link
                             href="/login"
                             onClick={() => setIsOpen(false)}
-                            className="flex w-full items-center justify-center gap-2 rounded-xl bg-white text-black py-4 text-base font-bold transition-transform active:scale-95"
+                            className="font-display flex w-full items-center justify-center gap-2.5 rounded-full bg-white text-black py-4 text-lg font-bold transition-transform active:scale-95 shadow-lg"
                         >
                             <User className="h-5 w-5" />
                             <span>Sign In</span>
