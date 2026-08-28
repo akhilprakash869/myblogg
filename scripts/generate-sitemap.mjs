@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-const BASE_URL = process.env.SITE_URL || 'https://akhilprakash.live';
+const BASE_URL = process.env.SITE_URL || 'https://akhilprakash.in';
 
 const rootDir = process.cwd();
 const postsDir = path.join(rootDir, 'content/posts');
