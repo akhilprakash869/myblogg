@@ -29,7 +29,7 @@ export function MobileMenu() {
         { href: "/category/politics", label: "Politics" },
         { href: "/category/research-lab", label: "Research Lab" },
         { href: "/category/technology", label: "Technology" },
-        { href: "/category/books-newsletters", label: "Books & Newsletters" },
+        { href: "/category/books-newsletters", label: "Books" },
     ];
 
     return (

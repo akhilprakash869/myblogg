@@ -37,7 +37,7 @@ export function Navbar() {
                             Technology
                         </Link>
                         <Link href="/category/books-newsletters" className="font-display text-lg font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
-                            Books & Newsletters
+                            Books
                         </Link>
                     </div>
                 </div>

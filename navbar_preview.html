@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Output Preview | MyBlog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-black text-white antialiased p-6 md:p-10 space-y-12">
+    
+    <!-- Section 1: Desktop Navigation Bar Output -->
+    <div class="max-w-6xl mx-auto rounded-3xl border border-zinc-800 bg-zinc-950 p-6 md:p-8 shadow-2xl">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-zinc-800">
+            <div>
+                <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-white text-black rounded-full">Desktop View</span>
+                <h2 class="text-2xl font-extrabold text-white mt-2">Desktop Header Navigation</h2>
+            </div>
+            <span class="text-sm text-zinc-400">Category updated to: <strong class="text-white">Books</strong></span>
+        </div>
+
+        <nav class="sticky top-0 z-50 w-full bg-black/95 backdrop-blur-xl border border-zinc-800 rounded-2xl">
+            <div class="flex h-20 items-center justify-between px-6 gap-4">
+                <div class="flex items-center gap-8">
+                    <!-- Brand Logo -->
+                    <a href="#" class="flex items-center gap-2 text-2xl font-black tracking-tight text-white">
+                        <span>MyBlog</span>
+                        <span class="h-2.5 w-2.5 rounded-full bg-white animate-pulse"></span>
+                    </a>
+
+                    <!-- Navigation Links -->
+                    <div class="flex items-center gap-6 xl:gap-8">
+                        <a href="#" class="text-base font-bold text-zinc-400 hover:text-white">Life Story</a>
+                        <a href="#" class="text-base font-bold text-zinc-400 hover:text-white">Lifestyle</a>
+                        <a href="#" class="text-base font-bold text-zinc-400 hover:text-white">Online Security</a>
+                        <a href="#" class="text-base font-bold text-zinc-400 hover:text-white">Politics</a>
+                        <a href="#" class="text-base font-bold text-zinc-400 hover:text-white">Research Lab</a>
+                        <a href="#" class="text-base font-bold text-zinc-400 hover:text-white">Technology</a>
+                        <a href="#" class="text-base font-bold text-white underline underline-offset-4 decoration-white">Books</a>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Section 2: Mobile Navigation Output -->
+    <div class="max-w-6xl mx-auto rounded-3xl border border-zinc-800 bg-zinc-950 p-6 md:p-8 shadow-2xl">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-zinc-800">
+            <div>
+                <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-white text-black rounded-full">Mobile View</span>
+                <h2 class="text-2xl font-extrabold text-white mt-2">Mobile Drawer Menu</h2>
+            </div>
+            <span class="text-sm text-zinc-400">Category updated to: <strong class="text-white">Books</strong></span>
+        </div>
+
+        <div class="max-w-sm mx-auto rounded-2xl border border-zinc-800 bg-black p-6 space-y-4">
+            <div class="flex items-center justify-between pb-4 border-b border-zinc-800">
+                <span class="font-black text-xl text-white">MyBlog •</span>
+                <span class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-white">✕</span>
+            </div>
+            <div class="flex flex-col gap-4 font-black text-2xl tracking-tight pt-2">
+                <a href="#" class="text-zinc-400">Life Story</a>
+                <a href="#" class="text-zinc-400">Lifestyle</a>
+                <a href="#" class="text-zinc-400">Online Security</a>
+                <a href="#" class="text-zinc-400">Politics</a>
+                <a href="#" class="text-zinc-400">Research Lab</a>
+                <a href="#" class="text-zinc-400">Technology</a>
+                <a href="#" class="text-white underline underline-offset-8">Books</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
