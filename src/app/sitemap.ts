@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const posts = getAllPosts();
-    const baseUrl = "https://akhilprakash.live";
+    const baseUrl = "https://akhilprakash.in";
 
     // Strict YYYY-MM-DD format, safely stripped of time/timezone
     const today = new Date().toISOString().split("T")[0];

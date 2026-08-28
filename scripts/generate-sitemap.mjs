@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-const BASE_URL = process.env.SITE_URL || 'https://akhilprakash.in';
+// Strictly use https://akhilprakash.in as the base domain
+const BASE_URL = 'https://akhilprakash.in';
 
 const rootDir = process.cwd();
 const postsDir = path.join(rootDir, 'content/posts');
@@ -42,7 +43,7 @@ function generateSitemap() {
   if (fs.existsSync(postsDir)) {
     const files = fs.readdirSync(postsDir);
     const mdxFiles = files.filter(
-      (file) => (file.endsWith('.mdx') || file.endsWith('.md')) && !file.startsWith('_')
+      (file) => file && (file.endsWith('.mdx') || file.endsWith('.md')) && !file.startsWith('_')
     );
 
     for (const file of mdxFiles) {
@@ -55,7 +56,9 @@ function generateSitemap() {
         continue;
       }
 
-      const slug = file.replace(/\.mdx?$/, '');
+      const slug = file.replace(/\.mdx?$/, '').trim();
+      if (!slug) continue;
+
       const lastmod = formatDate(data.date);
 
       postPages.push({
@@ -65,32 +68,43 @@ function generateSitemap() {
         changefreq: 'weekly',
       });
 
-      if (data.category) {
-        categoriesSet.add(data.category);
+      if (data.category && typeof data.category === 'string' && data.category.trim()) {
+        categoriesSet.add(data.category.trim());
       }
     }
   }
 
-  const categoryPages = Array.from(categoriesSet).map((category) => {
-    const categorySlug = category
-      .toLowerCase()
-      .replace(/ & /g, '-')
-      .replace(/ /g, '-');
-    return {
-      url: `${BASE_URL}/category/${categorySlug}`,
-      lastmod: today,
-      priority: '0.6',
-      changefreq: 'weekly',
-    };
-  });
+  const categoryPages = Array.from(categoriesSet)
+    .filter((cat) => cat && cat.trim().length > 0)
+    .map((category) => {
+      const categorySlug = category
+        .toLowerCase()
+        .replace(/ & /g, '-')
+        .replace(/ /g, '-');
+      return {
+        url: `${BASE_URL}/category/${categorySlug}`,
+        lastmod: today,
+        priority: '0.6',
+        changefreq: 'weekly',
+      };
+    });
 
-  const allPages = [...staticPages, ...categoryPages, ...postPages];
+  // Filter out any empty, null, or undefined URLs before XML tree generation
+  const rawAllPages = [...staticPages, ...categoryPages, ...postPages];
+  const allPages = rawAllPages.filter(
+    (page) =>
+      page &&
+      typeof page.url === 'string' &&
+      page.url.trim().length > 0 &&
+      page.url !== `${BASE_URL}/blog/` &&
+      page.url !== `${BASE_URL}/category/`
+  );
 
   const xmlUrls = allPages
     .map(
       (page) => `  <url>
-    <loc>${page.url}</loc>
-    <lastmod>${page.lastmod}</lastmod>
+    <loc>${page.url.trim()}</loc>
+    <lastmod>${page.lastmod || today}</lastmod>
     <changefreq>${page.changefreq || 'weekly'}</changefreq>
     <priority>${page.priority || '0.5'}</priority>
   </url>`

@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: "*",
             allow: "/",
         },
-        sitemap: "https://akhilprakash.live/sitemap.xml",
+        sitemap: "https://akhilprakash.in/sitemap.xml",
     };
 }
