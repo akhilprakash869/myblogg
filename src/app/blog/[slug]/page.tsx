@@ -148,14 +148,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     <AccessibilityToolbar language={post.meta.language || "en"} />
                 </div>
                 {post.meta.featuredImage && (
-                    <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-xl border border-[#333] bg-[#111]">
+                    <div className="relative mt-8 flex justify-center items-center overflow-hidden rounded-2xl border border-[#333] bg-[#0c0c0c] py-6 px-4">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                             src={post.meta.featuredImage}
                             alt={post.meta.imageAltText || post.meta.title}
-                            className="h-full w-full object-contain"
+                            className="max-h-[480px] w-auto max-w-full rounded-lg object-contain shadow-2xl"
                         />
-                        <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+                        <div className="absolute inset-0 bg-black/5 pointer-events-none" />
                     </div>
                 )}
             </header>
