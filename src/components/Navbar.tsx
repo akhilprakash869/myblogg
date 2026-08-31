@@ -16,28 +16,31 @@ export function Navbar() {
                         <span className="h-2.5 w-2.5 rounded-full bg-white animate-pulse"></span>
                     </Link>
 
-                    {/* Desktop Navigation - Larger Bold Single-Line Links */}
-                    <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-                        <Link href="/category/life-story" className="font-display text-lg font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
+                    {/* Desktop Navigation - Single-Line Links */}
+                    <div className="hidden xl:flex items-center gap-4 2xl:gap-6">
+                        <Link href="/category/life-story" className="font-display text-sm 2xl:text-base font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
                             Life Story
                         </Link>
-                        <Link href="/category/lifestyle" className="font-display text-lg font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
+                        <Link href="/category/lifestyle" className="font-display text-sm 2xl:text-base font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
                             Lifestyle
                         </Link>
-                        <Link href="/category/online-security" className="font-display text-lg font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
+                        <Link href="/category/online-security" className="font-display text-sm 2xl:text-base font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
                             Online Security
                         </Link>
-                        <Link href="/category/politics" className="font-display text-lg font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
+                        <Link href="/category/politics" className="font-display text-sm 2xl:text-base font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
                             Politics
                         </Link>
-                        <Link href="/category/research-lab" className="font-display text-lg font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
+                        <Link href="/category/research-lab" className="font-display text-sm 2xl:text-base font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
                             Research Lab
                         </Link>
-                        <Link href="/category/technology" className="font-display text-lg font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
+                        <Link href="/category/technology" className="font-display text-sm 2xl:text-base font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
                             Technology
                         </Link>
-                        <Link href="/category/books-newsletters" className="font-display text-lg font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
+                        <Link href="/category/books-newsletters" className="font-display text-sm 2xl:text-base font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
                             Books
+                        </Link>
+                        <Link href="/category/movies" className="font-display text-sm 2xl:text-base font-bold text-zinc-300 transition-colors hover:text-white tracking-wide whitespace-nowrap">
+                            Movies
                         </Link>
                     </div>
                 </div>

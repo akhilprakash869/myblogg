@@ -11,6 +11,7 @@ export default function Home() {
 
 
   const bookPosts = getPostsByCategory("Books & Newsletters").slice(0, 3);
+  const moviePosts = getPostsByCategory("Movies").slice(0, 3);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -73,13 +74,38 @@ export default function Home() {
             View all notes
           </Link>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {bookPosts.length > 0 ? (
             bookPosts.map((post) => (
               <BlogCard key={post.slug} post={post} />
             ))
           ) : (
             <p className="text-gray-500">No reading notes yet.</p>
+          )}
+        </div>
+      </section>
+
+      {/* Movie Session Section */}
+      <section className="container mx-auto px-4 py-16 md:px-6 border-b border-[#222] bg-[#050505]">
+        <div className="mb-10 flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-white mb-2">Movie Session</h2>
+            <p className="text-gray-400">Film reviews, cinematic analyses, and reflections.</p>
+          </div>
+          <Link
+            href="/category/movies"
+            className="text-sm font-medium text-gray-400 hover:text-white"
+          >
+            View all reviews
+          </Link>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {moviePosts.length > 0 ? (
+            moviePosts.map((post) => (
+              <BlogCard key={post.slug} post={post} />
+            ))
+          ) : (
+            <p className="text-gray-500">No movie reviews yet.</p>
           )}
         </div>
       </section>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBlog - Movie Session & Responsive Layout Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-black text-white antialiased">
+
+    <!-- Responsive Navbar -->
+    <nav class="sticky top-0 z-50 w-full bg-black/95 backdrop-blur-xl border-b border-[#222]">
+        <div class="container mx-auto flex h-20 items-center justify-between px-4 md:px-8 gap-4">
+            <div class="flex items-center gap-6 min-w-0 flex-1">
+                <a href="#" class="flex items-center gap-2.5 text-2xl md:text-3xl font-black tracking-tight text-white hover:opacity-90 transition-opacity shrink-0">
+                    <span>MyBlog</span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-white animate-pulse"></span>
+                </a>
+
+                <!-- Desktop Nav Links (xl screen size and above) -->
+                <div class="hidden xl:flex items-center gap-4 2xl:gap-6">
+                    <a href="#" class="text-sm 2xl:text-base font-bold text-zinc-300 hover:text-white transition-colors">Life Story</a>
+                    <a href="#" class="text-sm 2xl:text-base font-bold text-zinc-300 hover:text-white transition-colors">Lifestyle</a>
+                    <a href="#" class="text-sm 2xl:text-base font-bold text-zinc-300 hover:text-white transition-colors">Online Security</a>
+                    <a href="#" class="text-sm 2xl:text-base font-bold text-zinc-300 hover:text-white transition-colors">Politics</a>
+                    <a href="#" class="text-sm 2xl:text-base font-bold text-zinc-300 hover:text-white transition-colors">Research Lab</a>
+                    <a href="#" class="text-sm 2xl:text-base font-bold text-zinc-300 hover:text-white transition-colors">Technology</a>
+                    <a href="#" class="text-sm 2xl:text-base font-bold text-zinc-300 hover:text-white transition-colors">Books</a>
+                    <a href="#" class="text-sm 2xl:text-base font-bold text-white bg-zinc-800/80 px-3 py-1.5 rounded-full border border-zinc-700">Movies</a>
+                </div>
+            </div>
+
+            <!-- Right Controls: Search & Responsive Mobile Hamburger -->
+            <div class="flex items-center gap-4 shrink-0">
+                <div class="relative hidden sm:block">
+                    <input type="text" placeholder="Search..." class="bg-[#111] border border-[#333] rounded-full py-1.5 px-4 text-xs w-36 md:w-48 text-white focus:outline-none focus:border-zinc-500">
+                </div>
+                <button onclick="document.getElementById('mobile-drawer').classList.toggle('hidden')" class="xl:hidden p-2 rounded-lg border border-[#333] bg-[#111] text-gray-300 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-drawer" class="hidden xl:hidden bg-[#0d0d0d] border-b border-[#222] px-6 py-6 space-y-3 text-base font-bold">
+            <a href="#" class="block text-zinc-300 hover:text-white py-1">Life Story</a>
+            <a href="#" class="block text-zinc-300 hover:text-white py-1">Lifestyle</a>
+            <a href="#" class="block text-zinc-300 hover:text-white py-1">Online Security</a>
+            <a href="#" class="block text-zinc-300 hover:text-white py-1">Politics</a>
+            <a href="#" class="block text-zinc-300 hover:text-white py-1">Research Lab</a>
+            <a href="#" class="block text-zinc-300 hover:text-white py-1">Technology</a>
+            <a href="#" class="block text-zinc-300 hover:text-white py-1">Books</a>
+            <a href="#" class="block text-white font-extrabold text-blue-400 py-1">Movies (New Session)</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="flex-1">
+
+        <!-- Hero Banner -->
+        <section class="relative py-16 px-4 text-center border-b border-[#222] bg-gradient-to-b from-[#111] to-black">
+            <span class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-500/10 border border-blue-500/20 rounded-full">New Category Live</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 text-white">Movie Session Added</h1>
+            <p class="max-w-2xl mx-auto text-gray-400 text-sm md:text-base leading-relaxed">Explore in-depth cinematic critiques, political subtexts, and cultural reflections formatted with responsive perfection across all screen sizes.</p>
+        </section>
+
+        <!-- Book Session Section -->
+        <section class="container mx-auto px-4 py-14 md:px-6 border-b border-[#222] bg-[#0a0a0a]">
+            <div class="mb-8 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white mb-1">Book Session</h2>
+                    <p class="text-gray-400 text-sm">Structured reading notes and analysis.</p>
+                </div>
+                <a href="#" class="text-sm font-medium text-gray-400 hover:text-white">View all notes &rarr;</a>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <article class="flex h-full flex-col space-y-4 rounded-xl border border-[#222] bg-[#111] p-6 transition-colors hover:border-[#444]">
+                    <div class="relative aspect-video w-full overflow-hidden rounded-lg border border-[#333]">
+                        <img src="/images/amruthavarshinicover.jpg" alt="Amruthavarshini Book" class="h-full w-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop';">
+                    </div>
+                    <div class="space-y-2 flex-1">
+                        <div class="text-xs text-gray-400">August 28, 2026 • 5 min read</div>
+                        <h3 class="text-xl font-bold text-white">അമൃതവർഷിണി: വാക്കും പ്രാണനും ഒന്നാകുന്ന കവിതാപ്രപഞ്ചം</h3>
+                        <p class="line-clamp-3 text-sm text-gray-400">സുരേഷ് നാരായണന്റെ വിഖ്യാതമായ കവിതാസമാഹാരം 'അമൃതവർഷിണി'യുടെ വായനാനുഭവം.</p>
+                    </div>
+                    <div class="flex gap-2"><span class="rounded-full bg-[#222] px-2.5 py-1 text-xs text-gray-300">#Poetry</span></div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Movie Session Section (Newly Added Section) -->
+        <section class="container mx-auto px-4 py-14 md:px-6 border-b border-[#222] bg-[#050505]">
+            <div class="mb-8 flex items-center justify-between">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h2 class="text-2xl font-bold tracking-tight text-white mb-1">Movie Session</h2>
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">NEW</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Film reviews, cinematic analyses, and reflections.</p>
+                </div>
+                <a href="#" class="text-sm font-medium text-gray-400 hover:text-white">View all reviews &rarr;</a>
+            </div>
+
+            <!-- Responsive Grid: 1 col (mobile), 2 col (tablet), 3 col (desktop) -->
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                
+                <!-- Kathavasheshan Movie Card -->
+                <article class="flex h-full flex-col space-y-4 rounded-xl border border-[#222] bg-[#111] p-6 transition-all duration-300 hover:border-[#444] hover:bg-[#161616]">
+                    <div class="relative aspect-video w-full overflow-hidden rounded-lg border border-[#333] bg-black/50">
+                        <img src="/images/kadhvaseshanmoviepic.jpg" alt="Kathavasheshan" class="h-full w-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&auto=format&fit=crop';">
+                    </div>
+                    <div class="space-y-2 flex-1">
+                        <div class="text-xs text-gray-400">April 27, 2026 • 8 min read</div>
+                        <h3 class="text-xl font-bold text-white hover:text-blue-400 transition-colors">കഥാവശേഷൻ: സിനിമയുടെ സൂക്ഷ്മവായനയും മാർക്സിസ്റ്റ് നിരീക്ഷണങ്ങളും</h3>
+                        <p class="line-clamp-3 text-sm text-gray-400">ടി. വി. ചന്ദ്രൻ സംവിധാനം ചെയ്ത 'കഥാവശേഷൻ' എന്ന ക്ലാസിക് മലയാള സിനിമയുടെ രാഷ്ട്രീയ സൂക്ഷ്മവായന.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="rounded-full bg-[#222] px-2.5 py-1 text-xs text-gray-300">#Kathavasheshan</span>
+                        <span class="rounded-full bg-[#222] px-2.5 py-1 text-xs text-gray-300">#MalayalamMovie</span>
+                    </div>
+                </article>
+
+                <!-- Sandhesham Movie Card -->
+                <article class="flex h-full flex-col space-y-4 rounded-xl border border-[#222] bg-[#111] p-6 transition-all duration-300 hover:border-[#444] hover:bg-[#161616]">
+                    <div class="relative aspect-video w-full overflow-hidden rounded-lg border border-[#333] bg-black/50">
+                        <img src="/images/sandesamscenepoland.jpg" alt="Sandhesham Poland Scene" class="h-full w-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=600&auto=format&fit=crop';">
+                    </div>
+                    <div class="space-y-2 flex-1">
+                        <div class="text-xs text-gray-400">April 25, 2026 • 8 min read</div>
+                        <h3 class="text-xl font-bold text-white hover:text-blue-400 transition-colors">"പോളണ്ടിനെപ്പറ്റി ഒരക്ഷരം മിണ്ടരുത്..!" - സന്ദേശത്തിലെ തമാശയും യഥാർത്ഥ ചരിത്രവും</h3>
+                        <p class="line-clamp-3 text-sm text-gray-400">'സന്ദേശം' സിനിമയിലെ വിഖ്യാതമായ പോളണ്ട് ഡയലോഗും അതിന്റെ പിന്നിലെ യഥാർത്ഥ ചരിത്രവും.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="rounded-full bg-[#222] px-2.5 py-1 text-xs text-gray-300">#Sandhesham</span>
+                        <span class="rounded-full bg-[#222] px-2.5 py-1 text-xs text-gray-300">#PolandDialogue</span>
+                    </div>
+                </article>
+
+                <!-- The Kerala Story Movie Card -->
+                <article class="flex h-full flex-col space-y-4 rounded-xl border border-[#222] bg-[#111] p-6 transition-all duration-300 hover:border-[#444] hover:bg-[#161616]">
+                    <div class="relative aspect-video w-full overflow-hidden rounded-lg border border-[#333] bg-black/50">
+                        <img src="/images/the-kerala-story-vs-real-kerala.jpg" alt="The Kerala Story" class="h-full w-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&auto=format&fit=crop';">
+                    </div>
+                    <div class="space-y-2 flex-1">
+                        <div class="text-xs text-gray-400">February 28, 2026 • 6 min read</div>
+                        <h3 class="text-xl font-bold text-white hover:text-blue-400 transition-colors">The Kerala Story vs Real Kerala Story | Fact-Check & Analysis</h3>
+                        <p class="line-clamp-3 text-sm text-gray-400">A detailed movie review examining the claims, myths, and contrasting them with real Kerala harmony.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="rounded-full bg-[#222] px-2.5 py-1 text-xs text-gray-300">#MovieReview</span>
+                        <span class="rounded-full bg-[#222] px-2.5 py-1 text-xs text-gray-300">#FactCheck</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-[#222] py-8 text-center text-xs text-gray-500">
+        <p>&copy; 2026 MyBlog by Akhil Prakash. Built with Next.js & Tailwind CSS.</p>
+    </footer>
+
+</body>
+</html>

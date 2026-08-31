@@ -30,6 +30,7 @@ export function MobileMenu() {
         { href: "/category/research-lab", label: "Research Lab" },
         { href: "/category/technology", label: "Technology" },
         { href: "/category/books-newsletters", label: "Books" },
+        { href: "/category/movies", label: "Movies" },
     ];
 
     return (
